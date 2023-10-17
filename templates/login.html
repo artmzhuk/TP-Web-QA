@@ -13,13 +13,14 @@
     <!-- Custom styles for this template -->
 
 </head>
-<body class="d-flex flex-column h-100 bg-light">
+<body class="bg-light">
 <header>
     <!-- Fixed navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="../static/assets/img/logo.webp" class="">Ask Nothing
+                <img src="../static/assets/img/logo.webp" class="">
+                <span class="d-none d-sm-inline">Ask Nothing</span>
             </a>
 
             <form class="container-fluid w-50">
@@ -35,7 +36,7 @@
                 <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="../static/assets/img/eminem-ava.png" width="32" height="32" alt="User" class="userpic">
-                    Slim Shady
+                    <span class="d-none d-md-inline">Slim Shady</span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                     <button class="dropdown-item" type="button">Settings</button>
@@ -48,9 +49,9 @@
 </header>
 
 <!-- Begin page content -->
-<main class="flex-shrink-0">
-    <div class="container">
-        <div class="row">
+<main class="">
+    <div class="container-lg mt-5">
+        <div class="row mx-4 mx-lg-0">
             <div class="col-md-9 left-column">
                 <div class="row text-center">
                     <div class="col-4"></div>
@@ -72,9 +73,9 @@
 
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-lg-3 pt-4 ps-4">
                 <div class="row">
-                    <h2 class="row-title">Popular Tags</h2>
+                    <h2 class="">Popular Tags</h2>
                     <div>
                         <span class="badge text-bg-primary tags"><a href="">CSS</a></span>
                         <span class="badge text-bg-secondary tags"><a href="">Bamonka</a></span>
@@ -84,8 +85,8 @@
                         <span class="badge  text-bg-dark tags"><a href="">C++ programming</a></span>
                     </div>
                 </div>
-                <div class="row">
-                    <h2 class="row-title">Best Members</h2>
+                <div class="row mt-4">
+                    <div class="h2">Best Members</div>
                     <ul class="best-members-list">
                         <li><a href="">Mr. Freeman</a></li>
                         <li><a href="">Max Payne</a></li>

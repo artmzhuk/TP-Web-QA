@@ -1,0 +1,90 @@
+/* Bootstrap 5 tweak: do not underline links unless hovered over */
+a:not([class*="btn"]) {
+    text-decoration: none;
+}
+a:not([class*="btn"]):hover {
+    text-decoration: underline;
+}
+
+
+main > .container {
+    padding: 60px 15px 0;
+}
+
+.navbar-brand > img{
+    max-width: 30px;
+    margin-right: 5px;
+}
+
+/*.row-title {
+    margin-top: 25px;
+}*/
+
+.left-column {
+    padding: 25px;
+}
+
+.question-image {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 15px;
+}
+
+.question-answer-image{
+    max-width: 75%;
+    border-radius: 15px;
+}
+
+.question-title {
+    font-family: Helvetica, serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.question-text {
+    font-family: Helvetica, serif;
+    font-size: 16px;
+}
+
+.tags {
+    max-width: 150%;
+    margin: 1px;
+}
+
+.best-members-list {
+    list-style-type: none;
+}
+
+.best-members-list > li {
+    font-size: 20px;
+    margin-left: 0%;
+    white-space: nowrap;
+}
+
+.dropdown-toggle img {
+    margin-right: 0.5rem;
+}
+
+.userpic {
+    max-width: 100%;
+    border-radius: 16px;
+}
+
+.icon{
+    max-width: 22px;
+}
+
+.dislike{
+    max-width: 22px;
+    rotate: 180deg;
+}
+
+.pagination{
+    margin-top: 20px;
+    margin-left: -20px;
+}
+
+.badge > a{
+    color: white;
+    text-decoration: none;
+}

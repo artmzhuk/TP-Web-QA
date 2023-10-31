@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="auto">
+<head>
+
+    <meta charset="utf-8">
+    <title>User Settings</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="../static/bootstrap/bootstrap.css">
+    <script src="../static/js/bootstrap.bundle.js"></script>
+    <link href="../static/css/main.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+
+</head>
+<body class="bg-light">
+<header>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="../static/assets/img/logo.webp" class="">
+                <span class="d-none d-sm-inline">Ask Nothing</span>
+            </a>
+
+            <form class="container-fluid w-50">
+                <div class="input-group">
+                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                    <button class="input-group-text bg-primary" type="submit">
+                        <img class="text-center icon" src="../static/assets/img/icon-search.png">
+                    </button>
+                </div>
+            </form>
+
+            <div class="dropdown">
+                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="../static/assets/img/eminem-ava.png" width="32" height="32" alt="User" class="userpic">
+                    <span class="d-none d-md-inline">Slim Shady</span>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                    <button class="dropdown-item" type="button">Settings</button>
+                    <button class="dropdown-item text-danger" type="button">Log Out</button>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+</header>
+
+<!-- Begin page content -->
+<main class="">
+    <div class="container-lg">
+        <div class="row mx-4 mx-lg-0">
+            <div class="col-lg-9 left-column">
+                <div class="row">
+                    <h4 class="mb-3">Settings: Dr.Pepper</h4>
+                    <form class="needs-validation" novalidate="">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label for="login" class="form-label">Login</label>
+                                <input type="text" class="form-control" id="login" value="dr_pepper2007"
+                                       placeholder="Username" spellcheck="false"
+                                       required="">
+                                <div class="invalid-feedback">
+                                    Valid login is required.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="email" class="form-label">Email<span
+                                    class="text-body-secondary"></span></label>
+                            <input type="email" class="form-control" id="email" value="dr_pepper@example.com"
+                                   placeholder="Email" spellcheck="false">
+                            <div class="invalid-feedback">
+                                Please enter a valid email address.
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="nickname" class="form-label">NickName</label>
+                            <div class="input-group has-validation">
+                                <input type="text" class="form-control" id="nickname" value="dr_pepper"
+                                       placeholder="Nickname" spellcheck="false"
+                                       required="">
+                                <div class="invalid-feedback">
+                                    Your username is required.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="ava" class="form-label ">Upload Avatar</label>
+                            <div class="mb-2">
+                                <img src="../static/assets/img/eminem-ava.png" width="256" height="256"
+                                     alt="User Avatar">
+                            </div>
+                            <input type="file" accept="image/png, image/jpeg" class="form-control" id="ava">
+                        </div>
+
+                        <hr class="my-4">
+
+                        <button class="btn btn-success btn-lg" type="submit">Save</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-3 pt-4 ps-4">
+                <div class="row">
+                    <h2 class="">Popular Tags</h2>
+                    <div>
+                        <span class="badge text-bg-primary tags"><a href="">CSS</a></span>
+                        <span class="badge text-bg-secondary tags"><a href="">Bamonka</a></span>
+                        <span class="badge text-bg-success tags"><a href="">offtopic</a></span>
+                        <span class="badge text-bg-danger tags"><a href="">cats</a></span>
+                        <span class="badge text-bg-warning tags"><a href="">memes</a></span>
+                        <span class="badge  text-bg-dark tags"><a href="">C++ programming</a></span>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="h2">Best Members</div>
+                    <ul class="best-members-list">
+                        <li><a href="">Mr. Freeman</a></li>
+                        <li><a href="">Max Payne</a></li>
+                        <li><a href="">Carl Johnson</a></li>
+                        <li><a href="">Geralt of Rivia</a></li>
+                        <li><a href="">John Tanner</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="footer mt-auto py-3 bg-body-tertiary">
+    <div class="container">
+        <span class="text-body-secondary">Artem Zhuk, WEB2023</span>
+    </div>
+</footer>
+
+</body>
+</html>

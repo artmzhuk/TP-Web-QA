@@ -26,22 +26,6 @@ main > .container-lg {
     border-radius: 15px;
 }
 
-.question-answer-image{
-    max-width: 75%;
-    border-radius: 15px;
-}
-
-.question-title {
-    font-family: Helvetica, serif;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.question-text {
-    font-family: Helvetica, serif;
-    font-size: 16px;
-}
-
 .tags {
     max-width: 150%;
     margin: 1px;

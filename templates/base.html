@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <title>Base</title>
+    <title>Index</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="../static/bootstrap/bootstrap.css">
@@ -13,20 +13,21 @@
     <!-- Custom styles for this template -->
 
 </head>
-<body class="d-flex flex-column h-100 bg-light">
+<body class="bg-light">
 <header>
     <!-- Fixed navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="../static/assets/img/logo.webp" class="">Ask Nothing
+                <img src="../static/assets/img/logo.webp" class="" alt="">
+                <span class="d-none d-sm-inline">Ask Nothing</span>
             </a>
 
             <form class="container-fluid w-50">
                 <div class="input-group">
                     <input class="form-control" type="search" placeholder="Search" aria-label="Search">
                     <button class="input-group-text bg-primary" type="submit">
-                        <img class="text-center icon" src="../static/assets/img/icon-search.png">
+                        <img class="text-center icon" src="../static/assets/img/icon-search.png" alt="Find">
                     </button>
                 </div>
             </form>
@@ -35,7 +36,7 @@
                 <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="../static/assets/img/eminem-ava.png" width="32" height="32" alt="User" class="userpic">
-                    Slim Shady
+                    <span class="d-none d-md-inline">Slim Shady</span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                     <button class="dropdown-item" type="button">Settings</button>
@@ -48,34 +49,14 @@
 </header>
 
 <!-- Begin page content -->
-<main class="flex-shrink-0">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-9 left-column">
-                <h1 class="row-title">Questions</h1>
-
-                <div class="bd-example m-2 border-0">
-                    <nav aria-label="Another pagination example">
-                        <ul class="pagination flex-wrap">
-                            <li class="page-item disabled">
-                                <a class="page-link">Previous</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item active" aria-current="page">
-                                <a class="page-link" href="#">2</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+<main class="">
+    <div class="container-lg">
+        <div class="row mx-4 mx-lg-0">
+            <div class="col-lg-9 pt-4">
             </div>
-            <div class="col-md-3">
+            <div class="col-lg-3 pt-4 ps-4">
                 <div class="row">
-                    <h2 class="row-title">Popular Tags</h2>
+                    <h2 class="">Popular Tags</h2>
                     <div>
                         <span class="badge text-bg-primary tags"><a href="">CSS</a></span>
                         <span class="badge text-bg-secondary tags"><a href="">Bamonka</a></span>
@@ -85,8 +66,8 @@
                         <span class="badge  text-bg-dark tags"><a href="">C++ programming</a></span>
                     </div>
                 </div>
-                <div class="row">
-                    <h2 class="row-title">Best Members</h2>
+                <div class="row mt-4">
+                    <div class="h2">Best Members</div>
                     <ul class="best-members-list">
                         <li><a href="">Mr. Freeman</a></li>
                         <li><a href="">Max Payne</a></li>

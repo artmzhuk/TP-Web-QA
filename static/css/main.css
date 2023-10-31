@@ -7,7 +7,7 @@ a:not([class*="btn"]):hover {
 }
 
 
-main > .container {
+main > .container-lg {
     padding: 60px 15px 0;
 }
 
@@ -15,10 +15,6 @@ main > .container {
     max-width: 30px;
     margin-right: 5px;
 }
-
-/*.row-title {
-    margin-top: 25px;
-}*/
 
 .left-column {
     padding: 25px;

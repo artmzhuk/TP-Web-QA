@@ -6,9 +6,9 @@
     <title>Index</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="../static/bootstrap/bootstrap.css">
-    <script src="../static/js/bootstrap.bundle.js"></script>
-    <link href="../static/css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/bootstrap/bootstrap.css">
+    <script src="../../static/js/bootstrap.bundle.js"></script>
+    <link href="../../static/css/main.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
 
@@ -19,7 +19,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="../static/assets/img/logo.webp" class="" alt="">
+                <img src="../../static/assets/img/logo.webp" class="" alt="">
                 <span class="d-none d-sm-inline">Ask Nothing</span>
             </a>
 
@@ -27,7 +27,7 @@
                 <div class="input-group">
                     <input class="form-control" type="search" placeholder="Search" aria-label="Search">
                     <button class="input-group-text bg-primary" type="submit">
-                        <img class="text-center icon" src="../static/assets/img/icon-search.png" alt="Find">
+                        <img class="text-center icon" src="../../static/assets/img/icon-search.png" alt="Find">
                     </button>
                 </div>
             </form>
@@ -35,7 +35,7 @@
             <div class="dropdown">
                 <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="../static/assets/img/eminem-ava.png" width="32" height="32" alt="User" class="userpic">
+                    <img src="../../static/assets/img/eminem-ava.png" width="32" height="32" alt="User" class="userpic">
                     <span class="d-none d-md-inline">Slim Shady</span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
@@ -53,6 +53,9 @@
     <div class="container-lg">
         <div class="row mx-4 mx-lg-0">
             <div class="col-lg-9 pt-4">
+                {% block content %}
+
+                {% endblock %}
             </div>
             <div class="col-lg-3 pt-4 ps-4">
                 <div class="row">

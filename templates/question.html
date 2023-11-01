@@ -17,13 +17,13 @@
 <header>
     <!-- Fixed navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
+        <div class="container flex-nowrap">
             <a class="navbar-brand" href="#">
                 <img src="../static/assets/img/logo.webp" class="">
-                <span class="d-none d-sm-inline">Ask Nothing</span>
+                <span class="d-none d-md-inline">Ask Nothing</span>
             </a>
 
-            <form class="container-fluid w-50">
+            <form class="d-flex w-50">
                 <div class="input-group">
                     <input class="form-control" type="search" placeholder="Search" aria-label="Search">
                     <button class="input-group-text bg-primary" type="submit">
@@ -31,19 +31,10 @@
                     </button>
                 </div>
             </form>
-
-            <div class="dropdown">
-                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="../static/assets/img/eminem-ava.png" width="32" height="32" alt="User" class="userpic">
-                    <span class="d-none d-md-inline">Slim Shady</span>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                    <button class="dropdown-item" type="button">Settings</button>
-                    <button class="dropdown-item text-danger" type="button">Log Out</button>
-                </div>
+            <div class="d-flex flex-wrap">
+                <a class="px-2 text-light" href="" >Login</a>
+                <a class="px-2 text-light" href="">Register</a>
             </div>
-
         </div>
     </nav>
 </header>
@@ -75,7 +66,7 @@
                         <div class="d-flex align-items-center mt-1">
 
                             <div class="btn-group" role="group" aria-label="Likes">
-                                <div class="input-group-text rounded-end-0" id="btnGroupAddon">5 likes</div>
+                                <div class="input-group-text rounded-end-0" id="btnGroupAddon1">5 likes</div>
                                 <button type="button" class="btn btn-success"><img
                                         src="../static/assets/img/like.png" class="icon m-0"></button>
                                 <button type="button" class="btn btn-danger "><img
@@ -110,13 +101,13 @@
                         <div class="d-flex align-items-center mt-1">
 
                             <div class="btn-group me-4" role="group" aria-label="Likes">
-                                <div class="input-group-text rounded-end-0" id="btnGroupAddon">+5</div>
+                                <div class="input-group-text rounded-end-0" id="btnGroupAddon2">+5</div>
                                 <button type="button" class="btn btn-outline-success">+</button>
                                 <button type="button" class="btn btn-outline-danger border-start-0">-</button>
                             </div>
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="correct-answer">
-                                <label class="form-check-label" for="same-address">Answer is correct!</label>
+                                <label class="form-check-label" for="correct-answer">Answer is correct!</label>
                             </div>
                         </div>
                     </div>
@@ -140,13 +131,13 @@
                         <div class="d-flex align-items-center mt-1">
 
                             <div class="btn-group me-4" role="group" aria-label="Likes">
-                                <div class="input-group-text rounded-end-0" id="btnGroupAddon">+3</div>
+                                <div class="input-group-text rounded-end-0" id="btnGroupAddon3">+3</div>
                                 <button type="button" class="btn btn-outline-success">+</button>
                                 <button type="button" class="btn btn-outline-danger border-start-0">-</button>
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="correct-answer">
-                                <label class="form-check-label" for="same-address">Answer is correct!</label>
+                                <input type="checkbox" class="form-check-input" id="correct-answer1">
+                                <label class="form-check-label" for="correct-answer1">Answer is correct!</label>
                             </div>
                         </div>
                     </div>

@@ -1,3 +1,5 @@
+{% load static %}
+
 <!doctype html>
 <html lang="en" class="h-100" data-bs-theme="auto">
 <head>
@@ -6,9 +8,9 @@
     <title>Index</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="../../static/bootstrap/bootstrap.css">
-    <script src="../../static/js/bootstrap.bundle.js"></script>
-    <link href="../../static/css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static '/bootstrap/bootstrap.css' %}">
+    <script src="{% static '/js/bootstrap.bundle.js' %}"></script>
+    <link href="{% static '/css/main.css' %}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
 

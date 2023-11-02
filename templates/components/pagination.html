@@ -1,18 +1,39 @@
 <div class="bd-example m-2 border-0">
-    <nav aria-label="Another pagination example">
+    <nav aria-label="pagination">
         <ul class="pagination flex-wrap">
-            <li class="page-item disabled">
-                <a class="page-link">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">2</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">4</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
+
+            {% if questions.has_previous is not True %}
+                <li class="page-item disabled">
+                    <a class="page-link">Previous</a>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ questions.previous_page_number }}">Previous</a>
+                </li>
+            {% endif %}
+            {% for i in pagination %}
+                {% if i == questions.number %}
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="#">{{ i }}</a>
+                    </li>
+                {% elif i == '…' %}
+                    <li class="page-item page-link">{{ i }}</li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if questions.has_next is not True %}
+                <li class="page-item disabled">
+                    <a class="page-link">Next</a>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ questions.next_page_number }}">Next</a>
+                </li>
+            {% endif %}
+
+
         </ul>
     </nav>
 </div>
+

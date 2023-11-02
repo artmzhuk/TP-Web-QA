@@ -8,7 +8,7 @@ QUESTIONS = [
         'likes': i,
         'content': f'Lorem Ipsum {i}',
         'tags': ['CSS', 'Bauman', 'cats'],
-    } for i in range(200)
+    } for i in range(2500)
 ]
 
 QUESTION_REPLY = [
@@ -29,19 +29,21 @@ STATS = {
 def paginate(request, objects, per_page=15):
     page = request.GET.get('page', 1)
     paginator = Paginator(objects, per_page)
-    return paginator.page(page)
+    return paginator.page(page), paginator.get_elided_page_range(page, on_each_side=1)
 
 
 # Create your views here.
 def index(request):
     return render(request, 'index.html',
-                  {'questions': paginate(request, QUESTIONS), 'page_title': 'Questions', 'stats': STATS})
+                  {'questions': paginate(request, QUESTIONS)[0], 'page_title': 'Questions', 'stats': STATS,
+                   'pagination': paginate(request, QUESTIONS)[1]})
 
 
 def question(request, question_id):
     item = QUESTIONS[question_id]
     replies = QUESTION_REPLY
-    return render(request, 'question.html', {'question': item, 'replies': replies, 'stats': STATS})
+    return render(request, 'question.html', {'question': item, 'replies': replies, 'stats': STATS,
+                                             'pagination': paginate(request, QUESTIONS)[1]})
 
 
 def ask(request):
@@ -50,12 +52,14 @@ def ask(request):
 
 def hot(request):
     return render(request, 'index.html',
-                  {'questions': paginate(request, QUESTIONS), 'page_title': 'Hot Questions', 'stats': STATS})
+                  {'questions': paginate(request, QUESTIONS)[0], 'page_title': 'Hot Questions', 'stats': STATS,
+                   'pagination': paginate(request, QUESTIONS)[1]})
 
 
 def tag(request, tag_id):
     return render(request, 'index.html',
-                  {'questions': paginate(request, QUESTIONS), 'page_title': f'Tag: {tag_id}', 'stats': STATS})
+                  {'questions': paginate(request, QUESTIONS)[0], 'page_title': f'Tag: {tag_id}', 'stats': STATS,
+                   'pagination': paginate(request, QUESTIONS)[1]})
 
 
 def login(request):

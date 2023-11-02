@@ -19,9 +19,18 @@ def paginate(objects, page, per_page=15):
 # Create your views here.
 def index(request):
     page = request.GET.get('page', 1)
-    return render(request, 'index.html', {'questions': paginate(QUESTIONS, page)})
+    return render(request, 'index.html', {'questions': paginate(QUESTIONS, page), 'page_title'  : 'Questions'})
 
 
 def question(request, question_id):
     item = QUESTIONS[question_id]
     return render(request, 'question.html', {'question': item})
+
+
+def ask(request):
+    return render(request, 'ask.html')
+
+
+def hot(request):
+    page = request.GET.get('page', 1)
+    return render(request, 'index.html', {'questions': paginate(QUESTIONS, page)})

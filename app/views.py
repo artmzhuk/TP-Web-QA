@@ -57,7 +57,7 @@ def hot(request):
 
 def tag(request, tag_id):
     return render(request, 'index.html',
-                  {'questions': paginate(request, QUESTIONS), 'page_title': f'{tag_id}:', 'stats': STATS})
+                  {'questions': paginate(request, QUESTIONS), 'page_title': f'Tag: {tag_id}', 'stats': STATS})
 
 
 def login(request):

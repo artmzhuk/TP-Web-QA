@@ -8,7 +8,7 @@ QUESTIONS = [
         'likes': i,
         'content': f'Lorem Ipsum {i}',
         'tags': ['CSS', 'Bauman', 'cats'],
-    } for i in range(20)
+    } for i in range(200)
 ]
 
 QUESTION_REPLY = [
@@ -28,13 +28,12 @@ STATS = {
 
 def paginate(request, objects, per_page=15):
     page = request.GET.get('page', 1)
-    paginator = Paginator(QUESTIONS, per_page)
+    paginator = Paginator(objects, per_page)
     return paginator.page(page)
 
 
 # Create your views here.
 def index(request):
-    page = request.GET.get('page', 1)
     return render(request, 'index.html',
                   {'questions': paginate(request, QUESTIONS), 'page_title': 'Questions', 'stats': STATS})
 
@@ -50,7 +49,6 @@ def ask(request):
 
 
 def hot(request):
-    page = request.GET.get('page', 1)
     return render(request, 'index.html',
                   {'questions': paginate(request, QUESTIONS), 'page_title': 'Hot Questions', 'stats': STATS})
 

@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, InvalidPage
+from django.http import HttpResponseNotFound
 
 QUESTIONS = [
     {
@@ -29,7 +30,14 @@ STATS = {
 def paginate(request, objects, per_page=15):
     page = request.GET.get('page', 1)
     paginator = Paginator(objects, per_page)
-    return paginator.page(page), paginator.get_elided_page_range(page, on_each_side=1)
+    try:
+        page_obj = paginator.page(page)
+        page_range = paginator.get_elided_page_range(page, on_each_side=1)
+    except InvalidPage as e:
+        page = 1
+        page_obj = paginator.page(page)
+        page_range = paginator.get_elided_page_range(page, on_each_side=1)
+    return page_obj, page_range
 
 
 # Create your views here.

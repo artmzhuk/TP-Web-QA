@@ -20,9 +20,9 @@
             </div>
             <div class="col-xl-3 ps-3 fw-bold">
                 Tags:
-                <a href="">CSS</a>,
-                <a href="">Bauman</a>,
-                <a href="">offtopic</a>
+                {% for tag in question.tags %}
+                    <a href="{% url 'tag' tag_id=tag %}">{{ tag }}</a>{% if forloop.last is False %},{% endif %}
+                {% endfor %}
             </div>
             <div class="col-lg-6">
                 <button type="button" class="btn btn-outline-primary float-end">Reply</button>

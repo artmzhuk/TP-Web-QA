@@ -23,78 +23,39 @@
                 </div>
                 <div class="ps-3 fw-bold">
                     Tags:
-                    <a href="">CSS</a>,
-                    <a href="">Bauman</a>,
-                    <a href="">offtopic</a>
+                    {% for tag in question.tags %}
+                        <a href="{% url 'tag' tag_id=tag %}">{{ tag }}</a>{% if forloop.last is False %},{% endif %}
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
     <hr/>
-    <div class="row p-2 border border-dark mb-3">
-        <div class="col-1 p-1 text-center">
-            <img src="../static/assets/img/eminem-ava.png" class="w-75 rounded-2">
-        </div>
-        <div class="col-11">
-            <div class="">
-                <p> This is a direct answer to your own question but isn't elevated to a high enough level.
-                    <code>dplyr</code>
-                    is truly an extendable front-end to multiple data storage mechanisms where as
-                    <code>data.table</code>
-                    is an extension to a single one.
-                </p>
-                <p>Look at <code>dplyr</code> as a back-end agnostic interface, with all of the targets
-                    using the same grammer, where you can extend the targets and handlers at will.
-                    <code>data.table</code>
-                    is, from the <code>dplyr</code> perspective, one of those targets.
-                </p>
+    {% for reply in replies %}
+        <div class="row p-2 border border-dark mb-3">
+            <div class="col-1 p-1 text-center">
+                <img src="../static/assets/img/eminem-ava.png" class="w-75 rounded-2">
             </div>
-            <div class="d-flex align-items-center mt-1">
+            <div class="col-11">
+                <div class="">
+                    {{ reply.content }}
+                </div>
+                <div class="d-flex align-items-center mt-1">
 
-                <div class="btn-group me-4" role="group" aria-label="Likes">
-                    <div class="input-group-text rounded-end-0" id="btnGroupAddon">+5</div>
-                    <button type="button" class="btn btn-outline-success">+</button>
-                    <button type="button" class="btn btn-outline-danger border-start-0">-</button>
-                </div>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="correct-answer">
-                    <label class="form-check-label" for="same-address">Answer is correct!</label>
+                    <div class="btn-group me-4" role="group" aria-label="Likes">
+                        <div class="input-group-text rounded-end-0" id="btnGroupAddon">+{{ reply.likes }}</div>
+                        <button type="button" class="btn btn-outline-success">+</button>
+                        <button type="button" class="btn btn-outline-danger border-start-0">-</button>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="correct-answer">
+                        <label class="form-check-label" for="same-address">Answer is correct!</label>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row p-2 border border-dark mb-3">
-        <div class="col-1 p-1 text-center">
-            <img src="../static/assets/img/eminem-ava.png" class="w-75 rounded-2">
-        </div>
-        <div class="col-11">
-            <div class="">
-                <p> This is a direct answer to your own question but isn't elevated to a high enough level.
-                    <code>dplyr</code>
-                    is truly an extendable front-end to multiple data storage mechanisms where as
-                    <code>data.table</code>
-                    is an extension to a single one.
-                </p>
-                <p>Look at <code>dplyr</code> as a back-end agnostic interface, with all of the targets
-                    using the same grammer, where you can extend the targets and handlers at will.
-                    <code>data.table</code>
-                    is, from the <code>dplyr</code> perspective, one of those targets.
-                </p>
-            </div>
-            <div class="d-flex align-items-center mt-1">
 
-                <div class="btn-group me-4" role="group" aria-label="Likes">
-                    <div class="input-group-text rounded-end-0" id="btnGroupAddon">+3</div>
-                    <button type="button" class="btn btn-outline-success">+</button>
-                    <button type="button" class="btn btn-outline-danger border-start-0">-</button>
-                </div>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="correct-answer">
-                    <label class="form-check-label" for="same-address">Answer is correct!</label>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% endfor %}
     <hr/>
     <div class="row input-group mb-2">
                     <textarea rows="7" class="form-control border-dark" placeholder="Type your answer here"

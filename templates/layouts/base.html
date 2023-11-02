@@ -64,22 +64,19 @@
                 <div class="row">
                     <h2 class="">Popular Tags</h2>
                     <div>
-                        <span class="badge text-bg-primary tags"><a href="">CSS</a></span>
-                        <span class="badge text-bg-secondary tags"><a href="">Bamonka</a></span>
-                        <span class="badge text-bg-success tags"><a href="">offtopic</a></span>
-                        <span class="badge text-bg-danger tags"><a href="">cats</a></span>
-                        <span class="badge text-bg-warning tags"><a href="">memes</a></span>
-                        <span class="badge  text-bg-dark tags"><a href="">C++ programming</a></span>
+                        {% for tag in stats.tags %}
+                            <span class="badge text-bg-{% cycle 'primary' 'secondary' 'success' 'danger' 'warning' 'dark' %} tags">
+                                <a href="{% url 'tag' tag_id=tag %}">{{ tag }}</a>
+                            </span>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="row mt-4">
                     <div class="h2">Best Members</div>
                     <ul class="best-members-list">
-                        <li><a href="">Mr. Freeman</a></li>
-                        <li><a href="">Max Payne</a></li>
-                        <li><a href="">Carl Johnson</a></li>
-                        <li><a href="">Geralt of Rivia</a></li>
-                        <li><a href="">John Tanner</a></li>
+                        {% for member in stats.best_members %}
+                            <li><a href="">{{ member }}</a></li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>

@@ -76,3 +76,6 @@ def login(request):
 
 def signup(request):
     return render(request, 'signup.html', {'stats': STATS})
+
+def settings(request):
+    return render(request, 'settings.html', {'stats': STATS})

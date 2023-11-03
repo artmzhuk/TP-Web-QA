@@ -1,6 +1,5 @@
-from django.shortcuts import render
 from django.core.paginator import Paginator, InvalidPage
-from django.http import HttpResponseNotFound
+from django.shortcuts import render
 
 QUESTIONS = [
     {
@@ -17,8 +16,8 @@ QUESTION_REPLY = [
         'content': 'Look at dplyr as a back-end agnostic interface, with all of the targets'
                    'using the same grammer, where you can extend the targets and handlers at will.'
                    'data.table is, from the dplyr perspective, one of those targets.',
-        'likes': (3 - i),
-    } for i in range(3)
+        'likes': (50 - i),
+    } for i in range(50)
 ]
 
 STATS = {
@@ -42,16 +41,17 @@ def paginate(request, objects, per_page=15):
 
 # Create your views here.
 def index(request):
+    page_obj, pagination_buttons = paginate(request, QUESTIONS)
     return render(request, 'index.html',
-                  {'questions': paginate(request, QUESTIONS)[0], 'page_title': 'Questions', 'stats': STATS,
-                   'pagination': paginate(request, QUESTIONS)[1]})
+                  {'page_obj': page_obj, 'page_title': 'Questions', 'stats': STATS,
+                   'pagination': pagination_buttons})
 
 
 def question(request, question_id):
     item = QUESTIONS[question_id]
-    replies = QUESTION_REPLY
-    return render(request, 'question.html', {'question': item, 'replies': replies, 'stats': STATS,
-                                             'pagination': paginate(request, QUESTIONS)[1]})
+    page_obj, pagination_buttons = paginate(request, QUESTION_REPLY)
+    return render(request, 'question.html', {'question': item, 'page_obj': page_obj, 'stats': STATS,
+                                             'pagination': pagination_buttons})
 
 
 def ask(request):
@@ -59,15 +59,17 @@ def ask(request):
 
 
 def hot(request):
+    page_obj, pagination_buttons = paginate(request, QUESTIONS)
     return render(request, 'index.html',
-                  {'questions': paginate(request, QUESTIONS)[0], 'page_title': 'Hot Questions', 'stats': STATS,
-                   'pagination': paginate(request, QUESTIONS)[1]})
+                  {'page_obj': page_obj, 'page_title': 'Hot Questions', 'stats': STATS,
+                   'pagination': pagination_buttons})
 
 
 def tag(request, tag_id):
+    page_obj, pagination_buttons = paginate(request, QUESTIONS)
     return render(request, 'index.html',
-                  {'questions': paginate(request, QUESTIONS)[0], 'page_title': f'Tag: {tag_id}', 'stats': STATS,
-                   'pagination': paginate(request, QUESTIONS)[1]})
+                  {'page_obj': page_obj, 'page_title': f'Tag: {tag_id}', 'stats': STATS,
+                   'pagination': pagination_buttons})
 
 
 def login(request):
@@ -76,6 +78,7 @@ def login(request):
 
 def signup(request):
     return render(request, 'signup.html', {'stats': STATS})
+
 
 def settings(request):
     return render(request, 'settings.html', {'stats': STATS})

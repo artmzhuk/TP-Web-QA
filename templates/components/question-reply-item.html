@@ -1,0 +1,24 @@
+{% load static %}
+
+<div class="row p-2 border border-dark mb-3">
+    <div class="col-1 p-1 text-center">
+        <img src="{% static 'assets/img/eminem-ava.png' %}" class="w-75 rounded-2">
+    </div>
+    <div class="col-11">
+        <div class="">
+            {{ reply.content }}
+        </div>
+        <div class="d-flex align-items-center mt-1">
+
+            <div class="btn-group me-4" role="group" aria-label="Likes">
+                <div class="input-group-text rounded-end-0" id="btnGroupAddon">+{{ reply.likes }}</div>
+                <button type="button" class="btn btn-outline-success">+</button>
+                <button type="button" class="btn btn-outline-danger border-start-0">-</button>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="correct-answer">
+                <label class="form-check-label" for="same-address">Answer is correct!</label>
+            </div>
+        </div>
+    </div>
+</div>

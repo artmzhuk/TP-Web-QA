@@ -1,0 +1,32 @@
+{% load static %}
+
+<div class="row border border-black rounded-3 p-3 pb-2 mt-3">
+    <div class="col-2">
+        <img src="{% static 'assets/img/eminem-ava.png' %}" class="question-image" alt="User">
+    </div>
+    <div class="col-10">
+        <div class="h4 link-underline-dark">
+            <a href="{% url 'question' question_id=question.id %}" class="">{{ question.title }}</a>
+        </div>
+        <p>{{ question.content }}</p>
+        <div class="row">
+
+            <div class="col-3 btn-group float-start" role="group" aria-label="Likes">
+                <div class="input-group-text rounded-end-0" id="LikesQ1">{{ question.likes }} likes</div>
+                <button type="button" class="btn btn-success "><img
+                        src="{% static 'assets/img/like.png' %}" class="icon" alt="+"></button>
+                <button type="button" class="btn btn-danger "><img
+                        src="{% static 'assets/img/like.png' %}" class="dislike" alt="-"></button>
+            </div>
+            <div class="col-xl-3 ps-3 fw-bold">
+                Tags:
+                {% for tag in question.tags %}
+                    <a href="{% url 'tag' tag_id=tag %}">{{ tag }}</a>{% if forloop.last is False %},{% endif %}
+                {% endfor %}
+            </div>
+            <div class="col-lg-6">
+                <button type="button" class="btn btn-outline-primary float-end">Reply</button>
+            </div>
+        </div>
+    </div>
+</div>

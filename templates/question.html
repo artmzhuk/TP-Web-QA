@@ -1,205 +1,49 @@
-<!doctype html>
-<html lang="en" class="h-100" data-bs-theme="auto">
-<head>
+{% extends 'layouts/base.html' %}
 
-    <meta charset="utf-8">
-    <title>Question</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% load static %}
 
-    <link rel="stylesheet" href="../static/bootstrap/bootstrap.css">
-    <script src="../static/js/bootstrap.bundle.js"></script>
-    <link href="../static/css/main.css" rel="stylesheet">
+{% block title %}{{ question.title }}{% endblock %}
 
-    <!-- Custom styles for this template -->
+{% block content %}
+    <div class="row">
+        <div class="col-2">
+            <img src="{% static 'assets/img/eminem-ava.png' %} " class="question-image">
+        </div>
+        <div class="col-10">
+            <div class="h1">
+                {{ question.title }}
+            </div>
+            <div>
+                {{ question.content }}
+            </div>
+            <div class="d-flex align-items-center mt-1">
 
-</head>
-<body class="bg-light">
-<header>
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container flex-nowrap">
-            <a class="navbar-brand" href="#">
-                <img src="../static/assets/img/logo.webp" class="">
-                <span class="d-none d-md-inline">Ask Nothing</span>
-            </a>
-
-            <form class="d-flex w-50">
-                <div class="input-group">
-                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-                    <button class="input-group-text bg-primary" type="submit">
-                        <img class="text-center icon" src="../static/assets/img/icon-search.png">
-                    </button>
+                <div class="btn-group" role="group" aria-label="Likes">
+                    <div class="input-group-text rounded-end-0" id="btnGroupAddon">{{ question.likes }} likes</div>
+                    <button type="button" class="btn btn-success"><img
+                            src="{% static 'assets/img/like.png' %}" class="icon m-0"></button>
+                    <button type="button" class="btn btn-danger "><img
+                            src="{% static 'assets/img/like.png' %}" class="dislike"></button>
                 </div>
-            </form>
-            <div class="d-flex flex-wrap">
-                <a class="px-2 text-light" href="">Login</a>
-                <a class="px-2 text-light" href="">Register</a>
+                <div class="ps-3 fw-bold">
+                    Tags:
+                    {% for tag in question.tags %}
+                        <a href="{% url 'tag' tag_id=tag %}">{{ tag }}</a>{% if forloop.last is False %},{% endif %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    </nav>
-</header>
-
-<!-- Begin page content -->
-<main class="">
-    <div class="container-lg">
-        <div class="row mx-4 mx-lg-0">
-            <div class="col-lg-9 pt-4">
-                <div class="row">
-                    <div class="col-2">
-                        <img src="../static/assets/img/eminem-ava.png" class="question-image">
-                    </div>
-                    <div class="col-10">
-                        <div class="h1">
-                            To be or not to be?
-                        </div>
-                        <div>
-                            <ol>
-                                <li><code>data.table</code> and <code>dplyr</code> are comparable in speed, except when
-                                    there are many (i.e. &gt;10-100K) groups, and in some other circumstances (see
-                                    benchmarks below)
-                                </li>
-                                <li><code>dplyr</code> has more accessible syntax</li>
-                                <li><code>dplyr</code> abstracts (or will) potential DB interactions</li>
-                                <li>There are some minor functionality differences (see "Examples/Usage" below)</li>
-                            </ol>
-                        </div>
-                        <div class="d-flex align-items-center mt-1">
-
-                            <div class="btn-group" role="group" aria-label="Likes">
-                                <div class="input-group-text rounded-end-0" id="btnGroupAddon1">5 likes</div>
-                                <button type="button" class="btn btn-success"><img
-                                        src="../static/assets/img/like.png" class="icon m-0"></button>
-                                <button type="button" class="btn btn-danger "><img
-                                        src="../static/assets/img/like.png" class="dislike"></button>
-                            </div>
-                            <div class="ps-3 fw-bold">
-                                Tags:
-                                <a href="">CSS</a>,
-                                <a href="">Bauman</a>,
-                                <a href="">offtopic</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr/>
-                <div class="row p-2 border border-dark mb-3">
-                    <div class="col-1 p-1 text-center">
-                        <img src="../static/assets/img/eminem-ava.png" class="w-75 rounded-2">
-                    </div>
-                    <div class="col-11">
-                        <div class="">
-                            <p> This is a direct answer to your own question but isn't elevated to a high enough level.
-                                <code>dplyr</code>
-                                is truly an extendable front-end to multiple data storage mechanisms where as <code>data.table</code>
-                                is an extension to a single one.
-                            </p>
-                            <p>Look at <code>dplyr</code> as a back-end agnostic interface, with all of the targets
-                                using the same grammer, where you can extend the targets and handlers at will. <code>data.table</code>
-                                is, from the <code>dplyr</code> perspective, one of those targets.
-                            </p>
-                        </div>
-                        <div class="d-flex align-items-center mt-1">
-
-                            <div class="btn-group me-4" role="group" aria-label="Likes">
-                                <div class="input-group-text rounded-end-0" id="btnGroupAddon2">+5</div>
-                                <button type="button" class="btn btn-outline-success">+</button>
-                                <button type="button" class="btn btn-outline-danger border-start-0">-</button>
-                            </div>
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="correct-answer">
-                                <label class="form-check-label" for="correct-answer">Answer is correct!</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row p-2 border border-dark mb-3">
-                    <div class="col-1 p-1 text-center">
-                        <img src="../static/assets/img/eminem-ava.png" class="w-75 rounded-2">
-                    </div>
-                    <div class="col-11">
-                        <div class="">
-                            <p> This is a direct answer to your own question but isn't elevated to a high enough level.
-                                <code>dplyr</code>
-                                is truly an extendable front-end to multiple data storage mechanisms where as <code>data.table</code>
-                                is an extension to a single one.
-                            </p>
-                            <p>Look at <code>dplyr</code> as a back-end agnostic interface, with all of the targets
-                                using the same grammer, where you can extend the targets and handlers at will. <code>data.table</code>
-                                is, from the <code>dplyr</code> perspective, one of those targets.
-                            </p>
-                        </div>
-                        <div class="d-flex align-items-center mt-1">
-
-                            <div class="btn-group me-4" role="group" aria-label="Likes">
-                                <div class="input-group-text rounded-end-0" id="btnGroupAddon3">+3</div>
-                                <button type="button" class="btn btn-outline-success">+</button>
-                                <button type="button" class="btn btn-outline-danger border-start-0">-</button>
-                            </div>
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="correct-answer1">
-                                <label class="form-check-label" for="correct-answer1">Answer is correct!</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr/>
-                <div class="row input-group mb-2">
+    </div>
+    <hr/>
+    {% for reply in page_obj %}
+        {% include 'components/question-reply-item.html' %}
+    {% endfor %}
+    <hr/>
+    <div class="row input-group mb-2">
                     <textarea rows="7" class="form-control border-dark" placeholder="Type your answer here"
                               aria-label="Textarea"></textarea>
-                </div>
-                <button type="button" class="btn btn-outline-success rounded-1">Answer!</button>
-                <div class="bd-example m-2 border-0">
-                    <nav aria-label="Another pagination example">
-                        <ul class="pagination flex-wrap">
-                            <li class="page-item disabled">
-                                <a class="page-link">Previous</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item active" aria-current="page">
-                                <a class="page-link" href="#">2</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-
-            </div>
-            <div class="col-lg-3 pt-4 ps-4">
-                <div class="row">
-                    <h2 class="">Popular Tags</h2>
-                    <div>
-                        <span class="badge text-bg-primary tags"><a href="">CSS</a></span>
-                        <span class="badge text-bg-secondary tags"><a href="">Bamonka</a></span>
-                        <span class="badge text-bg-success tags"><a href="">offtopic</a></span>
-                        <span class="badge text-bg-danger tags"><a href="">cats</a></span>
-                        <span class="badge text-bg-warning tags"><a href="">memes</a></span>
-                        <span class="badge  text-bg-dark tags"><a href="">C++ programming</a></span>
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <div class="h2">Best Members</div>
-                    <ul class="best-members-list">
-                        <li><a href="">Mr. Freeman</a></li>
-                        <li><a href="">Max Payne</a></li>
-                        <li><a href="">Carl Johnson</a></li>
-                        <li><a href="">Geralt of Rivia</a></li>
-                        <li><a href="">John Tanner</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
     </div>
-</main>
+    <button type="button" class="btn btn-outline-success rounded-1">Answer!</button>
 
-<footer class="footer mt-auto py-3 bg-body-tertiary">
-    <div class="container">
-        <span class="text-body-secondary">Artem Zhuk, WEB2023</span>
-    </div>
-</footer>
-
-</body>
-</html>
+    {% include 'components/pagination.html' %}
+{% endblock %}

@@ -53,8 +53,11 @@ def hot(request):  # questions sorted by likes
 
 def tag(request, tag_id):
     page_obj, pagination_buttons = paginate(request, Question.objects.get_by_tag_best(tag_id))
+    tag_questions_num = Tag.objects.get(title__iexact=tag_id).get_num_of_questions()
     return render(request, 'index.html',
-                  {'page_obj': page_obj, 'page_title': f'Tag: {tag_id}', 'stats': get_stats(),
+                  {'page_obj': page_obj,
+                   'page_title': f'Tag: {tag_id} ({tag_questions_num} questions)',
+                   'stats': get_stats(),
                    'pagination': pagination_buttons})
 
 

@@ -30,6 +30,7 @@ class TagManager(models.Manager):
         return best
 
 
+
 class ProfileManager(models.Manager):
     def get_best_five(self):
         best = self.annotate(q_count=Count('question')) \
@@ -104,3 +105,6 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_num_of_questions(self):
+        return self.questions.count()

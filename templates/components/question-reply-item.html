@@ -8,15 +8,14 @@
         <div class="">
             {{ reply.content }}
         </div>
-        <div class="d-flex align-items-center mt-1">
-
+        <div class="d-flex flex-wrap mt-1">
             <div class="btn-group me-4" role="group" aria-label="Likes">
                 <div class="input-group-text rounded-end-0" id="btnGroupAddon">{% if reply.rating > 0 %}+{% endif %}
                     {{ reply.rating }}</div>
                 <button type="button" class="btn btn-outline-success">+</button>
                 <button type="button" class="btn btn-outline-danger border-start-0">-</button>
             </div>
-            <div class="form-check">
+            <div class="form-check align-self-center">
                 <input type="checkbox" class="form-check-input" id="correct-answer">
                 <label class="form-check-label" for="same-address">Answer is correct!</label>
             </div>

@@ -16,7 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+
+from Web_QA import settings
 from app import views
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -29,3 +33,6 @@ urlpatterns = [
     path('settings', views.settings, name='settings'),
     path('admin/', admin.site.urls),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -2,7 +2,7 @@
 
 <div class="row p-2 border border-dark mb-3">
     <div class="col-1 p-1 text-center">
-        <img src="{% static 'assets/img/eminem-ava.png' %}" class="w-75 rounded-2">
+        <img src="{{ reply.author.avatar.url }}" class="w-75 rounded-2">
     </div>
     <div class="col-11">
         <div class="">
@@ -21,5 +21,6 @@
                 <label class="form-check-label" for="same-address">Answer is correct!</label>
             </div>
         </div>
+        <span>Created {{ reply.creation_time }} by {{ reply.author.user.username }}</span>
     </div>
 </div>

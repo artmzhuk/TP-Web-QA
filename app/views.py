@@ -1,30 +1,6 @@
 from django.core.paginator import Paginator, InvalidPage
 from django.shortcuts import render
-from app.models import Question, Tag
-
-QUESTIONS = [
-    {
-        'id': i,
-        'title': f'Question {i}',
-        'likes': i,
-        'content': f'Lorem Ipsum {i}',
-        'tags': ['CSS', 'Bauman', 'cats'],
-    } for i in range(2500)
-]
-
-QUESTION_REPLY = [
-    {
-        'content': 'Look at dplyr as a back-end agnostic interface, with all of the targets'
-                   'using the same grammer, where you can extend the targets and handlers at will.'
-                   'data.table is, from the dplyr perspective, one of those targets.',
-        'likes': (50 - i),
-    } for i in range(50)
-]
-
-STATS = {
-    'tags': ['CSS', 'Bamonka', 'offtopic', 'cats', 'memes', 'C++ Programming'],
-    'best_members': ['Mr. Freeman', 'Max Payne', 'Carl Johnson', 'Geralt of Rivia', 'John Tanner']
-}
+from app.models import Question, Tag, Profile
 
 
 def paginate(request, objects, per_page=15):
@@ -40,46 +16,55 @@ def paginate(request, objects, per_page=15):
     return page_obj, page_range
 
 
+def get_stats():
+    stats = {
+        'tags': Tag.objects.get_best_six(),
+        'best_members': Profile.objects.get_best_five()
+    }
+    return stats
+
+
 # Create your views here.
 def index(request):
-    page_obj, pagination_buttons = paginate(request, Question.objects.all())
+    page_obj, pagination_buttons = paginate(request, Question.objects.get_newest())
     return render(request, 'index.html',
-                  {'page_obj': page_obj, 'page_title': 'Questions', 'stats': STATS,
+                  {'page_obj': page_obj, 'page_title': 'Questions', 'stats': get_stats(),
                    'pagination': pagination_buttons})
 
 
 def question(request, question_id):
     item = Question.objects.get(id=question_id)
-    page_obj, pagination_buttons = paginate(request, item.replies())
-    return render(request, 'question.html', {'question': item, 'page_obj': page_obj, 'stats': STATS,
+    page_obj, pagination_buttons = paginate(request, item.get_best_replies())
+    return render(request, 'question.html', {'question': item, 'page_obj': page_obj,
+                                             'stats': get_stats(),
                                              'pagination': pagination_buttons})
 
 
 def ask(request):
-    return render(request, 'ask.html', {'stats': STATS})
+    return render(request, 'ask.html', {'stats': get_stats()})
 
 
-def hot(request):
-    page_obj, pagination_buttons = paginate(request, Question.objects.all())
+def hot(request):  # questions sorted by likes
+    page_obj, pagination_buttons = paginate(request, Question.objects.get_best())
     return render(request, 'index.html',
-                  {'page_obj': page_obj, 'page_title': 'Hot Questions', 'stats': STATS,
+                  {'page_obj': page_obj, 'page_title': 'Hot Questions', 'stats': get_stats(),
                    'pagination': pagination_buttons})
 
 
 def tag(request, tag_id):
-    page_obj, pagination_buttons = paginate(request, Question.objects.filter(tag__title__iexact=tag_id))
+    page_obj, pagination_buttons = paginate(request, Question.objects.get_by_tag_best(tag_id))
     return render(request, 'index.html',
-                  {'page_obj': page_obj, 'page_title': f'Tag: {tag_id}', 'stats': STATS,
+                  {'page_obj': page_obj, 'page_title': f'Tag: {tag_id}', 'stats': get_stats(),
                    'pagination': pagination_buttons})
 
 
 def login(request):
-    return render(request, 'login.html', {'stats': STATS})
+    return render(request, 'login.html', {'stats': get_stats()})
 
 
 def signup(request):
-    return render(request, 'signup.html', {'stats': STATS})
+    return render(request, 'signup.html', {'stats': get_stats()})
 
 
 def settings(request):
-    return render(request, 'settings.html', {'stats': STATS})
+    return render(request, 'settings.html', {'stats': get_stats()})

@@ -1,5 +1,5 @@
 from django.core.paginator import Paginator, InvalidPage
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from app.models import Question, Tag, Profile
 
 
@@ -33,7 +33,7 @@ def index(request):
 
 
 def question(request, question_id):
-    item = Question.objects.get(id=question_id)
+    item = get_object_or_404(Question, id=question_id)
     page_obj, pagination_buttons = paginate(request, item.get_best_replies())
     return render(request, 'question.html', {'question': item, 'page_obj': page_obj,
                                              'stats': get_stats(),
@@ -53,7 +53,7 @@ def hot(request):  # questions sorted by likes
 
 def tag(request, tag_id):
     page_obj, pagination_buttons = paginate(request, Question.objects.get_by_tag_best(tag_id))
-    tag_questions_num = Tag.objects.get(title__iexact=tag_id).get_num_of_questions()
+    tag_questions_num = get_object_or_404(Tag, title__iexact=tag_id).get_num_of_questions()
     return render(request, 'index.html',
                   {'page_obj': page_obj,
                    'page_title': f'Tag: {tag_id} ({tag_questions_num} questions)',

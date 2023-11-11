@@ -1,0 +1,73 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="auto">
+<head>
+
+    <meta charset="utf-8">
+    <title>{% block title %}Index{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" sizes="192x192" href="{% static 'assets/img/logo.webp' %}">
+    <link rel="stylesheet" href="{% static '/bootstrap/bootstrap.css' %}">
+    <script src="{% static '/js/bootstrap.bundle.js' %}"></script>
+    <link href="{% static '/css/main.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+
+</head>
+<body class="bg-light">
+<header>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <img src="{% static 'assets/img/logo.webp' %}" class="" alt="">
+                <span class="d-none d-sm-inline">Ask Nothing</span>
+            </a>
+
+            <form class="container-fluid w-50">
+                <div class="input-group">
+                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                    <button class="input-group-text bg-primary" type="submit">
+                        <img class="text-center icon" src="{% static 'assets/img/icon-search.png' %}" alt="Find">
+                    </button>
+                </div>
+            </form>
+
+            <div class="dropdown">
+                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="{% static 'assets/img/eminem-ava.png' %} " width="32" height="32" alt="User"
+                         class="userpic">
+                    <span class="d-none d-md-inline">Slim Shady</span>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                    <button class="dropdown-item" type="button">Settings</button>
+                    <button class="dropdown-item text-danger" type="button">Log Out</button>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+</header>
+
+<!-- Begin page content -->
+<main class="">
+    <div class="container-lg">
+        <div class="row mx-4 mx-lg-0">
+            <div class="mt-3">
+                <h1>Oops, 404</h1>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="footer mt-auto py-3 bg-body-tertiary">
+    <div class="container">
+        <span class="text-body-secondary">Artem Zhuk, WEB2023</span>
+    </div>
+</footer>
+
+</body>
+</html>

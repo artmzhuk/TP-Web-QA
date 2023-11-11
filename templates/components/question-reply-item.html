@@ -11,7 +11,8 @@
         <div class="d-flex align-items-center mt-1">
 
             <div class="btn-group me-4" role="group" aria-label="Likes">
-                <div class="input-group-text rounded-end-0" id="btnGroupAddon">+{{ reply.likes }}</div>
+                <div class="input-group-text rounded-end-0" id="btnGroupAddon">{% if reply.rating > 0 %}+{% endif %}
+                    {{ reply.rating }}</div>
                 <button type="button" class="btn btn-outline-success">+</button>
                 <button type="button" class="btn btn-outline-danger border-start-0">-</button>
             </div>

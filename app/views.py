@@ -1,5 +1,6 @@
 from django.core.paginator import Paginator, InvalidPage
 from django.shortcuts import render
+from app.models import Question, Tag
 
 QUESTIONS = [
     {
@@ -41,15 +42,15 @@ def paginate(request, objects, per_page=15):
 
 # Create your views here.
 def index(request):
-    page_obj, pagination_buttons = paginate(request, QUESTIONS)
+    page_obj, pagination_buttons = paginate(request, Question.objects.all())
     return render(request, 'index.html',
                   {'page_obj': page_obj, 'page_title': 'Questions', 'stats': STATS,
                    'pagination': pagination_buttons})
 
 
 def question(request, question_id):
-    item = QUESTIONS[question_id]
-    page_obj, pagination_buttons = paginate(request, QUESTION_REPLY)
+    item = Question.objects.get(id=question_id)
+    page_obj, pagination_buttons = paginate(request, item.replies())
     return render(request, 'question.html', {'question': item, 'page_obj': page_obj, 'stats': STATS,
                                              'pagination': pagination_buttons})
 
@@ -59,14 +60,14 @@ def ask(request):
 
 
 def hot(request):
-    page_obj, pagination_buttons = paginate(request, QUESTIONS)
+    page_obj, pagination_buttons = paginate(request, Question.objects.all())
     return render(request, 'index.html',
                   {'page_obj': page_obj, 'page_title': 'Hot Questions', 'stats': STATS,
                    'pagination': pagination_buttons})
 
 
 def tag(request, tag_id):
-    page_obj, pagination_buttons = paginate(request, QUESTIONS)
+    page_obj, pagination_buttons = paginate(request, Question.objects.filter(tag__title__iexact=tag_id))
     return render(request, 'index.html',
                   {'page_obj': page_obj, 'page_title': f'Tag: {tag_id}', 'stats': STATS,
                    'pagination': pagination_buttons})

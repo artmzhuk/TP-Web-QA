@@ -47,7 +47,7 @@ class Command(BaseCommand):
             question = Question.objects.create(title=fake.sentence(nb_words=5),
                                                content=fake.paragraph(nb_sentences=5),
                                                author=profiles[fake.random_int(min=0, max=len(profiles) - 1)],
-                                               likes=fake.random_int(min=-ratio, max=ratio),
+                                               likes=fake.random_int(min=ratio * -20, max=ratio * 20),
                                                creation_time=fake.date_time_this_century(tzinfo=fake.pytimezone()))
             for _ in range(fake.random_int(min=1, max=4)):
                 tags[fake.random_int(min=0, max=len(tags) - 1)].questions.add(question)

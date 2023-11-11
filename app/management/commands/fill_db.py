@@ -36,7 +36,7 @@ class Command(BaseCommand):
             try:
                 user = User.objects.create_user(username, f'{fake.ascii_email()}', f'{fake.password(length=10)}')
             except IntegrityError:
-                username = f'{fake.first_name()} {fake.last_name()}i'
+                username = f'{fake.first_name()} {fake.last_name()}{i}'
                 user = User.objects.create_user(username, f'{fake.ascii_email()}', f'{fake.password(length=10)}')
             with open(f"uploads/avatars/_{username}-ava.png", "wb") as img:
                 img.write(fake.image(size=(512, 512)))
@@ -54,7 +54,7 @@ class Command(BaseCommand):
             for k in range(10):
                 reply = Reply.objects.create(question=question, content=fake.paragraph(nb_sentences=4),
                                              author=profiles[fake.random_int(min=0, max=len(profiles) - 1)],
-                                             rating=fake.random_int(min=-100, max=100),
+                                             rating=fake.random_int(min=ratio * -20, max=ratio * 20),
                                              isCorrect=False,
                                              creation_time=fake.date_time_between(start_date=question.creation_time,
                                                                                   tzinfo=fake.pytimezone()))

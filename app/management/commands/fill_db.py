@@ -1,9 +1,7 @@
-import random
-import string
 import time
 
 from django.core.management.base import BaseCommand, CommandError
-from app.models import Question, Profile, Reply, Tag
+from app.models import Question, Profile, Reply, Tag, QuestionLike, ReplyLike
 from django.contrib.auth.models import User
 from faker import Faker
 from django.db.utils import IntegrityError
@@ -31,7 +29,7 @@ class Command(BaseCommand):
 
         profiles = []
         for i in range(ratio):
-            print(f'User {i}')
+            print(f'User {i} from {ratio}')
             username = f'{fake.first_name()} {fake.last_name()}'
             try:
                 user = User.objects.create_user(username, f'{fake.ascii_email()}', f'{fake.password(length=10)}')
@@ -42,21 +40,44 @@ class Command(BaseCommand):
                 img.write(fake.image(size=(512, 512)))
             profiles.append(Profile.objects.create(user=user, avatar=f'avatars/_{username}-ava.png'))
 
-        for j in range(ratio * 10):
-            print(f'Question {j} from {ratio * 10}')
+        for i in range(ratio * 10):
+            print(f'Question {i} from {ratio * 10}')
             question = Question.objects.create(title=fake.sentence(nb_words=5),
                                                content=fake.paragraph(nb_sentences=5),
                                                author=profiles[fake.random_int(min=0, max=len(profiles) - 1)],
-                                               likes=fake.random_int(min=ratio * -20, max=ratio * 20),
+                                               likes=0,
                                                creation_time=fake.date_time_this_century(tzinfo=fake.pytimezone()))
-            for _ in range(fake.random_int(min=1, max=4)):
+
+            likeCounter = 0
+            for j in range(20):
+                value = fake.boolean() * 2 - 1
+                QuestionLike.objects.create(question=question,
+                                            author=profiles[fake.random_int(min=0, max=len(profiles) - 1)],
+                                            value=value)
+                likeCounter += value
+            question.likes = likeCounter
+            question.save()
+
+            for j in range(fake.random_int(min=1, max=4)):
                 tags[fake.random_int(min=0, max=len(tags) - 1)].questions.add(question)
-            for k in range(10):
+
+            for j in range(10):
                 reply = Reply.objects.create(question=question, content=fake.paragraph(nb_sentences=4),
                                              author=profiles[fake.random_int(min=0, max=len(profiles) - 1)],
-                                             rating=fake.random_int(min=ratio * -20, max=ratio * 20),
+                                             rating=0,
                                              isCorrect=False,
                                              creation_time=fake.date_time_between(start_date=question.creation_time,
                                                                                   tzinfo=fake.pytimezone()))
+                replyLikeCounter = 0
+                for k in range(5):
+                    value = fake.boolean() * 2 - 1
+                    ReplyLike.objects.create(reply=reply,
+                                             author=profiles[
+                                                 fake.random_int(min=0, max=len(profiles) - 1)],
+                                             value=value)
+                    replyLikeCounter += value
+                reply.rating = replyLikeCounter
+                reply.save()
+
         end = time.time()
         print(f'Time elapsed with ratio={ratio} is {end - start} secs')

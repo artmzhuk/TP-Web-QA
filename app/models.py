@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
-from django.db.models import Count
+from django.db.models import Count, Sum
 
 
 # Create your models here.
@@ -28,7 +28,6 @@ class TagManager(models.Manager):
         # for i in best:
         #     print(i.q_count, i.title)
         return best
-
 
 
 class ProfileManager(models.Manager):
@@ -108,3 +107,15 @@ class Tag(models.Model):
 
     def get_num_of_questions(self):
         return self.questions.count()
+
+
+class QuestionLike(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    author = models.ForeignKey(Profile, on_delete=models.PROTECT)
+    value = models.SmallIntegerField()
+
+
+class ReplyLike(models.Model):
+    reply = models.ForeignKey(Reply, on_delete=models.CASCADE)
+    author = models.ForeignKey(Profile, on_delete=models.PROTECT)
+    value = models.SmallIntegerField()

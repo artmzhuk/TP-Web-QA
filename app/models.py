@@ -114,8 +114,23 @@ class QuestionLike(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.PROTECT)
     value = models.SmallIntegerField()
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['question', 'author'],
+                name='unique_1',
+            )
+        ]
+
 
 class ReplyLike(models.Model):
     reply = models.ForeignKey(Reply, on_delete=models.CASCADE)
     author = models.ForeignKey(Profile, on_delete=models.PROTECT)
     value = models.SmallIntegerField()
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['reply', 'author'],
+                name='unique_2',
+            )
+        ]

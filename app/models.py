@@ -127,6 +127,7 @@ class ReplyLike(models.Model):
     reply = models.ForeignKey(Reply, on_delete=models.CASCADE)
     author = models.ForeignKey(Profile, on_delete=models.PROTECT)
     value = models.SmallIntegerField()
+
     class Meta:
         constraints = [
             models.UniqueConstraint(

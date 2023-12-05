@@ -34,8 +34,8 @@ class ProfileManager(models.Manager):
     def get_best_five(self):
         best = self.annotate(q_count=Count('question')) \
                    .order_by('-q_count')[:5]
-        for i in best:
-            print(i.q_count, i.user.username)
+        # for i in best:
+        #     print(i.q_count, i.user.username)
         return best
 
 

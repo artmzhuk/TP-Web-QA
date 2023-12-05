@@ -1,6 +1,10 @@
 from django.core.paginator import Paginator, InvalidPage
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 from app.models import Question, Tag, Profile
+from app.forms import LoginForm, RegisterForm
 
 
 def paginate(request, objects, per_page=15):
@@ -25,6 +29,7 @@ def get_stats():
 
 
 # Create your views here.
+@login_required(login_url='login/', redirect_field_name='continue')
 def index(request):
     page_obj, pagination_buttons = paginate(request, Question.objects.get_newest())
     return render(request, 'index.html',
@@ -61,12 +66,40 @@ def tag(request, tag_id):
                    'pagination': pagination_buttons})
 
 
-def login(request):
-    return render(request, 'login.html', {'stats': get_stats()})
+def login_view(request):
+    print(request.GET)
+    print(request.POST)
+    if request.method == 'GET':
+        login_form = LoginForm()
+    if request.method == 'POST':
+        login_form = LoginForm(request.POST)
+        if login_form.is_valid():
+            user = authenticate(request, **login_form.cleaned_data)
+            print(user)
+            if user is not None:
+                print('Successful login')
+                login(request, user)
+                return redirect(request.GET.get('continue', reverse(index)))
+            else:
+                login_form.add_error(None, 'Wrong password or user does not exist')
+    return render(request, 'login.html', {'form': login_form, 'stats': get_stats()})
 
 
 def signup(request):
-    return render(request, 'signup.html', {'stats': get_stats()})
+    if request.method == 'GET':
+        user_form = RegisterForm()
+    if request.method == 'POST':
+        user_form = RegisterForm(request.POST)
+        if user_form.is_valid():
+            user = authenticate(request, **user_form.cleaned_data)
+            print(user)
+            if user is not None:
+                print('Successful login')
+                login(request, user)
+                return redirect(request.GET.get('continue', reverse(index)))
+            else:
+                login_form.add_error(None, 'Wrong password or user does not exist')
+    return render(request, 'signup.html', {'form': user_form, 'stats': get_stats()})
 
 
 def settings(request):

@@ -4,6 +4,7 @@ from django.core.management.base import BaseCommand, CommandError
 from app.models import Question, Profile, Reply, Tag, QuestionLike, ReplyLike
 from django.contrib.auth.models import User
 from faker import Faker
+from django.contrib.auth.hashers import make_password
 from django.db.utils import IntegrityError
 
 fake = Faker()
@@ -31,11 +32,13 @@ class Command(BaseCommand):
 
         profiles = []
         users = []
-        for i in range(ratio):
+        for i in range(ratio - 1):
             print(f'User {i} from {ratio}')
             username = f'{fake.first_name()} {fake.last_name()}{i}'
-            user = User(username=username, email=f'{fake.ascii_email()}', password=f'{fake.password(length=10)}')
+            user = User(username=username, email=f'{fake.ascii_email()}',
+                        password=f'{fake.password(length=10)}')
             users.append(user)
+        users.append(User(username='artem@test.by', email=f'artem@test.by', password=make_password(f'123')))
         User.objects.bulk_create(users, batch_size=1000)
         users = User.objects.all()
 

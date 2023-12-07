@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from app.models import Question, Tag, Profile
-from app.forms import LoginForm, RegisterForm
+from app.forms import LoginForm, RegisterForm, UserSettingsForm
 
 
 def paginate(request, objects, per_page=15):
@@ -13,7 +13,7 @@ def paginate(request, objects, per_page=15):
     try:
         page_obj = paginator.page(page)
         page_range = paginator.get_elided_page_range(page, on_each_side=1)
-    except InvalidPage as e:
+    except InvalidPage:
         page = 1
         page_obj = paginator.page(page)
         page_range = paginator.get_elided_page_range(page, on_each_side=1)
@@ -70,9 +70,9 @@ def tag(request, tag_id):
 def login_view(request):
     print(request.GET)
     print(request.POST)
-    if request.method == 'GET':
+    if request.method != 'POST':
         login_form = LoginForm()
-    if request.method == 'POST':
+    else:
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
             user = authenticate(request, **login_form.cleaned_data)
@@ -87,9 +87,9 @@ def login_view(request):
 
 
 def signup(request):
-    if request.method == 'GET':
+    if request.method != 'POST':
         user_form = RegisterForm()
-    if request.method == 'POST':
+    else:
         user_form = RegisterForm(request.POST)
         if user_form.is_valid():
             user_form.save()
@@ -107,5 +107,18 @@ def logout_view(request):
     return redirect(request.GET.get('continue', reverse(index)))
 
 
+@login_required(redirect_field_name='continue')
 def settings(request):
-    return render(request, 'settings.html', {'stats': get_stats(request)})
+    profile = Profile.objects.get(user=request.user)
+    if request.method != 'POST':
+        settings_form = UserSettingsForm(request=request,
+                                         initial={"username": profile.user.username, 'email': profile.user.email})
+    else:
+        settings_form = UserSettingsForm(request.POST, request=request,
+                                         initial={"username": profile.user.username, 'email': profile.user.email})
+        if settings_form.is_valid():
+            settings_form.save(profile=profile)
+
+            return redirect(reverse(settings))
+            # return render(request, 'settings.html', {'form': new_form, 'stats': get_stats(request)})
+    return render(request, 'settings.html', {'form': settings_form, 'stats': get_stats(request)})

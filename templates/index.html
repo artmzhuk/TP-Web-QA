@@ -3,8 +3,11 @@
 {% block title %}{{ page_title }}{% endblock %}
 
 {% block content %}
-
-    <h1 class="">{{ page_title }}</h1>
+    <div class="d-flex justify-content-between">
+        <h1 class="">{{ page_title }}</h1>
+        <a class="btn btn-outline-success d-flex align-items-center"
+                   href="{% url 'ask' %}">New question</a>
+    </div>
 
     {% for question in page_obj %}
         {% include 'components/index-question-item.html' %}

@@ -93,6 +93,11 @@ def signup(request):
         user_form = RegisterForm(request.POST)
         if user_form.is_valid():
             user_form.save()
+            username = user_form.cleaned_data['username']
+            password = user_form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
             return redirect(request.GET.get('continue', reverse(index)))
     return render(request, 'signup.html', {'form': user_form, 'stats': get_stats(request)})
 

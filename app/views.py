@@ -104,7 +104,7 @@ def signup(request):
 
 def logout_view(request):
     logout(request)
-    return redirect(reverse(index))
+    return redirect(request.GET.get('continue', reverse(index)))
 
 
 def settings(request):

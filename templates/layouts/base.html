@@ -44,13 +44,14 @@
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item user-dropdown" href="{% url 'settings' %}">Settings</a>
-                        <a class="dropdown-item user-dropdown text-danger" href="{% url 'logout' %}">Logout</a>
+                        <a class="dropdown-item user-dropdown text-danger"
+                           href="{% url 'logout' %}?continue={{ request.path }}">Logout</a>
                     </div>
                 </div>
             {% else %}
                 <span>
-                    <a href="{% url 'login' %}" class="mx-3 text-light">Login</a>
-                    <a href="{% url 'signup' %}" class="mx-3 text-light">Sign up</a>
+                    <a href="{% url 'login' %}?continue={{ request.path }}" class="mx-3 text-light">Login</a>
+                    <a href="{% url 'signup' %}?continue={{ request.path }}" class="mx-3 text-light">Sign up</a>
                 </span>
             {% endif %}
         </div>

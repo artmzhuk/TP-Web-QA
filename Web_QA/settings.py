@@ -136,7 +136,7 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = BASE_DIR / 'uploads'
 MEDIA_URL = '/uploads/'
 
-LOGIN_URL = '/login/'
+LOGIN_URL = '/login'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 

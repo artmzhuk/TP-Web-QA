@@ -2,6 +2,7 @@
 a:not([class*="btn"]) {
     text-decoration: none;
 }
+
 a:not([class*="btn"]):hover {
     text-decoration: underline;
 }
@@ -11,9 +12,14 @@ main > .container-lg {
     padding: 60px 15px 0;
 }
 
-.navbar-brand > img{
+.navbar-brand > img {
     max-width: 30px;
     margin-right: 5px;
+}
+
+.user-dropdown {
+    text-decoration: none;
+!important;
 }
 
 .left-column {
@@ -50,21 +56,21 @@ main > .container-lg {
     border-radius: 16px;
 }
 
-.icon{
+.icon {
     max-width: 22px;
 }
 
-.dislike{
+.dislike {
     max-width: 22px;
     rotate: 180deg;
 }
 
-.pagination{
+.pagination {
     margin-top: 20px;
     margin-left: -20px;
 }
 
-.badge > a{
+.badge > a {
     color: white;
     text-decoration: none;
 }

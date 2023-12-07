@@ -1,69 +1,12 @@
 {% extends 'layouts/base.html' %}
-
+{% load crispy_forms_tags %}
 {% block title %}Sign up{% endblock %}
 
 {% block content %}
     <div class="row">
         <h4 class="">Registration</h4>
-        <p class="text-danger my-2 float-start">Sorry, this email address is already registered!</p>
+        {% crispy form %}
 
-        <form class="needs-validation" novalidate="">
-            <div class="row g-3">
-                <div class="col-12">
-                    <label for="login" class="form-label">Login</label>
-                    <input type="text" class="form-control" id="login" placeholder="dr_pepper2007" value=""
-                           required="">
-                    <div class="invalid-feedback">
-                        Valid login is required.
-                    </div>
-                </div>
 
-            </div>
-
-            <div class="col-12">
-                <label for="email" class="form-label">Email <span
-                        class="text-body-secondary"></span></label>
-                <input type="email" class="form-control" id="email" placeholder="dr_pepper@example.com">
-                <div class="invalid-feedback">
-                    Please enter a valid email address.
-                </div>
-            </div>
-
-            <div class="col-12">
-                <label for="nickname" class="form-label">NickName</label>
-                <div class="input-group has-validation">
-                    <input type="text" class="form-control" id="nickname" placeholder="dr_pepper"
-                           required="">
-                    <div class="invalid-feedback">
-                        Your username is required.
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="" required="">
-                <div class="invalid-feedback">
-                    Please enter your password.
-                </div>
-            </div>
-
-            <div class="col-12">
-                <label for="rpassword" class="form-label">Repeat Password</label>
-                <input type="password" class="form-control" id="rpassword" placeholder="" required="">
-                <div class="invalid-feedback">
-                    Please enter correct password.
-                </div>
-            </div>
-
-            <div class="col-12">
-                <label for="ava" class="form-label">Upload Avatar</label>
-                <input type="file" accept="image/png, image/jpeg" class="form-control" id="ava">
-            </div>
-
-            <hr class="my-4">
-
-            <button class="w-100 btn btn-primary btn-lg" type="submit">Register</button>
-        </form>
     </div>
 {% endblock %}

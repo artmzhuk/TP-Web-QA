@@ -1,9 +1,11 @@
+import datetime
+
 from django import forms
 from django.core.exceptions import ValidationError
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, Submit, Field
+from crispy_forms.layout import Layout, Fieldset, Submit, Field, Button
 from crispy_bootstrap5.bootstrap5 import FloatingField
-from app.models import Profile, User
+from app.models import Profile, User, Question
 
 
 class LoginForm(forms.Form):
@@ -112,4 +114,35 @@ class UserSettingsForm(forms.Form):
             profile.user.save()
             profile.save()
 
+
 # TODO: добавить адеватную валидацию поля username, email, добавить картинки
+
+class AskQuestionForm(forms.Form):
+    title = forms.CharField(label='Title', min_length=5,
+                            widget=forms.TextInput(
+                                attrs={'placeholder': "e.g. How to print 'Hello, World!' in Python?"}))
+    text = forms.CharField(label='Text', min_length=10, widget=forms.Textarea(
+        attrs={'placeholder': "Type your question here", 'rows': '10'}))
+    tags = forms.CharField(label='Tags', required=False,widget=forms.TextInput(
+        attrs={'placeholder': "e.g. CSS, c++, golang"}))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.label_class = 'h5'
+        self.helper.layout = Layout(
+            Field('title', css_class='input-group mb-3'),
+            Field('text', css_class='input-group mb-3'),
+            Field('tags', css_class='input-group mb-3'),
+            Submit('submit', 'Ask!', css_class='btn btn-success', kwargs={'type': 'submit'})
+        )
+
+    def save(self, **kwargs):
+        profile = kwargs.pop('profile')
+        question = Question(title=self.cleaned_data['title'],
+                            content=self.cleaned_data['text'],
+                            author=profile,
+                            likes=0,
+                            creation_time=datetime.datetime.now())
+        question.save()
+        return question

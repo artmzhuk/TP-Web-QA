@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from app.models import Question, Tag, Profile
-from app.forms import LoginForm, RegisterForm, UserSettingsForm
+from app.forms import LoginForm, RegisterForm, UserSettingsForm, AskQuestionForm
 
 
 def paginate(request, objects, per_page=15):
@@ -47,7 +47,17 @@ def question(request, question_id):
 
 
 def ask(request):
-    return render(request, 'ask.html', {'stats': get_stats(request)})
+    ask_form = AskQuestionForm()
+    if request.method != 'POST':
+        ask_form = AskQuestionForm()
+    else:
+        ask_form = AskQuestionForm(request.POST)
+        if ask_form.is_valid():
+            question_saved = ask_form.save(profile = request.user.profile)
+            return redirect(reverse('question', args=[question_saved.id]))
+        else:
+            pass
+    return render(request, 'ask.html', {'form': ask_form, 'stats': get_stats(request)})
 
 
 def hot(request):  # questions sorted by likes

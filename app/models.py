@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.db.models import Count, Sum
+from django_resized import ResizedImageField
 
 
 # Create your models here.
@@ -52,7 +53,8 @@ class ReplyManager(models.Manager):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to='avatars')
+    avatar = ResizedImageField(size=[512, 512], crop=['top', 'left'], upload_to='avatars')
+    # avatar = models.ImageField(upload_to='avatars')
 
     objects = ProfileManager()
 

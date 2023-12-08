@@ -33,6 +33,7 @@ class RegisterForm(forms.ModelForm):
         fields = ['username', 'email', 'password']
 
     def clean(self):
+
         if User.objects.filter(username=self.cleaned_data['username']).exists():
             raise ValidationError("Username is occupied")
 

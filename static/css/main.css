@@ -30,6 +30,7 @@ main > .container-lg {
     max-width: 100%;
     max-height: 100%;
     border-radius: 15px;
+    object-fit: cover;
 }
 
 .tags {

@@ -38,7 +38,7 @@
                 <div class="dropdown">
                     <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{% static 'assets/img/eminem-ava.png' %} " width="32" height="32" alt="User"
+                        <img src="{{ stats.user.profile.avatar.url }} " width="32" height="32" alt="User"
                              class="userpic">
                         <span class="d-none d-md-inline">{{ stats.user.username }} </span>
                     </button>

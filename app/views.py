@@ -25,6 +25,7 @@ def get_stats(request):
         'tags': Tag.objects.get_best_six(),
         'best_members': Profile.objects.get_best_five(),
         'user': request.user,
+        'avatar': request.user.profile.avatar
     }
     return stats
 
@@ -45,7 +46,7 @@ def question(request, question_id):
                                              'stats': get_stats(request),
                                              'pagination': pagination_buttons})
 
-
+@login_required(redirect_field_name='continue')
 def ask(request):
     ask_form = AskQuestionForm()
     if request.method != 'POST':
@@ -53,7 +54,7 @@ def ask(request):
     else:
         ask_form = AskQuestionForm(request.POST)
         if ask_form.is_valid():
-            question_saved = ask_form.save(profile = request.user.profile)
+            question_saved = ask_form.save(profile=request.user.profile)
             return redirect(reverse('question', args=[question_saved.id]))
         else:
             pass
@@ -100,7 +101,7 @@ def signup(request):
     if request.method != 'POST':
         user_form = RegisterForm()
     else:
-        user_form = RegisterForm(request.POST)
+        user_form = RegisterForm(request.POST, request.FILES)
         if user_form.is_valid():
             user_form.save()
             username = user_form.cleaned_data['username']

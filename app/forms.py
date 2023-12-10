@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Submit, Field, Button, HTML
 from crispy_bootstrap5.bootstrap5 import FloatingField
-from app.models import Profile, User, Question
+from app.models import Profile, User, Question, Tag
 
 
 class LoginForm(forms.Form):
@@ -151,5 +151,13 @@ class AskQuestionForm(forms.Form):
                             author=profile,
                             likes=0,
                             creation_time=datetime.datetime.now())
+        question.save()
+        tagString = self.cleaned_data['tags']
+        tags = tagString.casefold().split(',')
+        for tagTitle in tags:
+            currentTag, _ = Tag.objects.get_or_create(title=tagTitle.strip())
+            currentTag.save()
+            currentTag.questions.add(question)
+            currentTag.save()
         question.save()
         return question

@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Submit, Field, Button, HTML
 from crispy_bootstrap5.bootstrap5 import FloatingField
-from app.models import Profile, User, Question, Tag
+from app.models import Profile, User, Question, Tag, Reply
 
 
 class LoginForm(forms.Form):
@@ -80,8 +80,9 @@ class UserSettingsForm(forms.Form):
             Field('email'),
             Field('password'),
             Field('avatar'),
-            HTML('Current Avatar<div class="mb-2"><img src="{{stats.user.profile.avatar.url}}" width="128" height="128" alt="User '
-                 'Avatar"></div>'),
+            HTML(
+                'Current Avatar<div class="mb-2"><img src="{{stats.user.profile.avatar.url}}" width="128" height="128" alt="User '
+                'Avatar"></div>'),
             Submit('submit', 'Submit', css_class='btn btn-success py-2 mt-1')
         )
 
@@ -161,3 +162,25 @@ class AskQuestionForm(forms.Form):
             currentTag.save()
         question.save()
         return question
+
+
+class ReplyForm(forms.Form):
+    text = forms.CharField(widget=forms.Textarea(
+        attrs={'placeholder': "Type your answer here", 'rows' : '7'}))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.label_class = 'd-none'
+        self.helper.layout = Layout(
+            Field('text', css_class='form-control border-dark'),
+                Submit('submit', 'Answer!', css_class='btn btn-success rounded-1', kwargs={'type': 'submit'})
+        )
+
+    def save(self, **kwargs):
+        question = kwargs.pop('question')
+        profile = kwargs.pop('profile')
+        reply = Reply(question=question, content=self.cleaned_data['text'], author=profile, rating = 0,
+                      isCorrect = False, creation_time=datetime.datetime.now())
+        reply.save()
+        return reply

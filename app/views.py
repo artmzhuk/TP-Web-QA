@@ -3,8 +3,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from app.models import Question, Tag, Profile
-from app.forms import LoginForm, RegisterForm, UserSettingsForm, AskQuestionForm
+from app.models import Question, Tag, Profile, Reply
+from app.forms import LoginForm, RegisterForm, UserSettingsForm, AskQuestionForm, ReplyForm
 
 
 def paginate(request, objects, per_page=15):
@@ -43,9 +43,18 @@ def index(request):
 def question(request, question_id):
     item = get_object_or_404(Question, id=question_id)
     page_obj, pagination_buttons = paginate(request, item.get_best_replies())
+    if request.method != 'POST':
+        reply_form = ReplyForm()
+    else:
+        reply_form = ReplyForm(request.POST)
+        if reply_form.is_valid():
+            reply_saved = reply_form.save(question=item, profile=request.user.profile)
+            return redirect(reverse('question', args=[question_id]))
     return render(request, 'question.html', {'question': item, 'page_obj': page_obj,
                                              'stats': get_stats(request),
-                                             'pagination': pagination_buttons})
+                                             'pagination': pagination_buttons,
+                                             'form': reply_form})
+
 
 @login_required(redirect_field_name='continue')
 def ask(request):

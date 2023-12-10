@@ -25,8 +25,9 @@ def get_stats(request):
         'tags': Tag.objects.get_best_six(),
         'best_members': Profile.objects.get_best_five(),
         'user': request.user,
-        'avatar': request.user.profile.avatar
     }
+    if request.user.is_authenticated:
+        stats.update({'avatar': request.user.profile.avatar})
     return stats
 
 
@@ -125,7 +126,7 @@ def settings(request):
         settings_form = UserSettingsForm(request=request,
                                          initial={"username": profile.user.username, 'email': profile.user.email})
     else:
-        settings_form = UserSettingsForm(request.POST, request=request,
+        settings_form = UserSettingsForm(request.POST, request.FILES, request=request,
                                          initial={"username": profile.user.username, 'email': profile.user.email})
         if settings_form.is_valid():
             settings_form.save(profile=profile)

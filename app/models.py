@@ -34,7 +34,10 @@ class TagManager(models.Manager):
 class ProfileManager(models.Manager):
     def create_profile(self, username, email, password, avatar):
         user = User.objects.create_user(username=username, email=email, password=password)
-        profile = Profile(user=user, avatar=avatar)
+        if avatar is None:
+            profile = Profile(user=user)
+        else:
+            profile = Profile(user=user, avatar=avatar)
         profile.save()
         return
 
@@ -53,7 +56,8 @@ class ReplyManager(models.Manager):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = ResizedImageField(size=[512, 512], crop=['top', 'left'], upload_to='avatars')
+    avatar = ResizedImageField(size=[512, 512], crop=['top', 'left'], upload_to='avatars',
+                               default='avatars/default.jpg')
     # avatar = models.ImageField(upload_to='avatars')
 
     objects = ProfileManager()

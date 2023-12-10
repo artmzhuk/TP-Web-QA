@@ -6,7 +6,7 @@
 
 {% block content %}
 <div class="row">
-    <h4 class="mb-3">Settings: Dr.Pepper</h4>
+    <h4 class="mb-3">Settings: {{ request.user.username }}</h4>
     {% crispy form%}
 </div>
 {% endblock %}

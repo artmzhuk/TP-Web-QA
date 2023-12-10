@@ -3,7 +3,7 @@ import datetime
 from django import forms
 from django.core.exceptions import ValidationError
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, Submit, Field, Button
+from crispy_forms.layout import Layout, Fieldset, Submit, Field, Button, HTML
 from crispy_bootstrap5.bootstrap5 import FloatingField
 from app.models import Profile, User, Question
 
@@ -64,6 +64,7 @@ class RegisterForm(forms.ModelForm):
 class UserSettingsForm(forms.Form):
     username = forms.CharField(label='Username')
     email = forms.CharField(label='Email', required=False)
+    avatar = forms.ImageField(label='Avatar', required=False)
     password = forms.CharField(min_length=3, widget=forms.PasswordInput, label='New password', required=False)
 
     # class Meta:
@@ -78,6 +79,9 @@ class UserSettingsForm(forms.Form):
             Field('username'),
             Field('email'),
             Field('password'),
+            Field('avatar'),
+            HTML('Current Avatar<div class="mb-2"><img src="{{stats.user.profile.avatar.url}}" width="128" height="128" alt="User '
+                 'Avatar"></div>'),
             Submit('submit', 'Submit', css_class='btn btn-success py-2 mt-1')
         )
 
@@ -103,15 +107,17 @@ class UserSettingsForm(forms.Form):
 
     def save(self, **kwargs):
         profile = kwargs.pop('profile')
-        print(profile)
+        # print(profile)
         if profile is not None:
-            print(profile.user.username != self.cleaned_data['username'])
+            # print(profile.user.username != self.cleaned_data['username'])
             if profile.user.username != self.cleaned_data['username']:
                 profile.user.username = self.cleaned_data['username']
             if profile.user.email != self.cleaned_data['email']:
                 profile.user.email = self.cleaned_data['email']
             if self.cleaned_data['password'] != '':
                 profile.user.set_password(self.cleaned_data['password'])
+            if self.cleaned_data['avatar']:
+                profile.avatar = self.cleaned_data['avatar']
             profile.user.save()
             profile.save()
 
@@ -124,7 +130,7 @@ class AskQuestionForm(forms.Form):
                                 attrs={'placeholder': "e.g. How to print 'Hello, World!' in Python?"}))
     text = forms.CharField(label='Text', min_length=10, widget=forms.Textarea(
         attrs={'placeholder': "Type your question here", 'rows': '10'}))
-    tags = forms.CharField(label='Tags', required=False,widget=forms.TextInput(
+    tags = forms.CharField(label='Tags', required=False, widget=forms.TextInput(
         attrs={'placeholder': "e.g. CSS, c++, golang"}))
 
     def __init__(self, *args, **kwargs):

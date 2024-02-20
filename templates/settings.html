@@ -1,57 +1,12 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
+
 {% block title %}User Settings{% endblock %}
 
 {% block content %}
 <div class="row">
-    <h4 class="mb-3">Settings: Dr.Pepper</h4>
-    <form class="needs-validation" novalidate="">
-        <div class="row g-3">
-            <div class="col-12">
-                <label for="login" class="form-label">Login</label>
-                <input type="text" class="form-control" id="login" value="dr_pepper2007"
-                       placeholder="Username" spellcheck="false"
-                       required="">
-                <div class="invalid-feedback">
-                    Valid login is required.
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12">
-            <label for="email" class="form-label">Email<span
-                    class="text-body-secondary"></span></label>
-            <input type="email" class="form-control" id="email" value="dr_pepper@example.com"
-                   placeholder="Email" spellcheck="false">
-            <div class="invalid-feedback">
-                Please enter a valid email address.
-            </div>
-        </div>
-
-        <div class="col-12">
-            <label for="nickname" class="form-label">NickName</label>
-            <div class="input-group has-validation">
-                <input type="text" class="form-control" id="nickname" value="dr_pepper"
-                       placeholder="Nickname" spellcheck="false"
-                       required="">
-                <div class="invalid-feedback">
-                    Your username is required.
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12">
-            <label for="ava" class="form-label ">Upload Avatar</label>
-            <div class="mb-2">
-                <img src="{% static 'assets/img/eminem-ava.png'%}" width="256" height="256"
-                     alt="User Avatar">
-            </div>
-            <input type="file" accept="image/png, image/jpeg" class="form-control" id="ava">
-        </div>
-
-        <hr class="my-4">
-
-        <button class="btn btn-success btn-lg" type="submit">Save</button>
-    </form>
+    <h4 class="mb-3">Settings: {{ request.user.username }}</h4>
+    {% crispy form%}
 </div>
 {% endblock %}

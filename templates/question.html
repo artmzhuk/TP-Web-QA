@@ -1,5 +1,5 @@
 {% extends 'layouts/base.html' %}
-
+{% load crispy_forms_tags %}
 {% load static %}
 
 {% block title %}{{ question.title }}{% endblock %}
@@ -40,10 +40,7 @@
     {% endfor %}
     <hr/>
     <div class="row input-group mb-2">
-                    <textarea rows="7" class="form-control border-dark" placeholder="Type your answer here"
-                              aria-label="Textarea"></textarea>
+        {% crispy form %}
     </div>
-    <button type="button" class="btn btn-outline-success rounded-1">Answer!</button>
-
     {% include 'components/pagination.html' %}
 {% endblock %}

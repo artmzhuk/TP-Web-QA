@@ -4,6 +4,7 @@ from django.core.management.base import BaseCommand, CommandError
 from app.models import Question, Profile, Reply, Tag, QuestionLike, ReplyLike
 from django.contrib.auth.models import User
 from faker import Faker
+from django.contrib.auth.hashers import make_password
 from django.db.utils import IntegrityError
 
 fake = Faker()
@@ -25,18 +26,20 @@ class Command(BaseCommand):
         tags = []
         for i in range(ratio):
             tags.append(Tag(title=f'{fake.word()}{i}'))
-        Tag.objects.bulk_create(tags)
+        Tag.objects.bulk_create(tags, batch_size=1000)
         tags = Tag.objects.all()
         print(f'Tags created')
 
         profiles = []
         users = []
-        for i in range(ratio):
+        for i in range(ratio - 1):
             print(f'User {i} from {ratio}')
             username = f'{fake.first_name()} {fake.last_name()}{i}'
-            user = User(username=username, email=f'{fake.ascii_email()}', password=f'{fake.password(length=10)}')
+            user = User(username=username, email=f'{fake.ascii_email()}',
+                        password=f'{fake.password(length=10)}')
             users.append(user)
-        User.objects.bulk_create(users)
+        users.append(User(username='artem@test.by', email=f'artem@test.by', password=make_password(f'123')))
+        User.objects.bulk_create(users, batch_size=1000)
         users = User.objects.all()
 
         for i, user in enumerate(users):
@@ -45,7 +48,7 @@ class Command(BaseCommand):
             with open(f"uploads/avatars/_{username}-ava.png", "wb") as img:
                 img.write(fake.image(size=(512, 512)))
             profiles.append(Profile(user=user, avatar=f'avatars/_{username}-ava.png'))
-        Profile.objects.bulk_create(profiles)
+        Profile.objects.bulk_create(profiles, batch_size=1000)
         profiles = Profile.objects.all()
 
         questions = []
@@ -57,7 +60,7 @@ class Command(BaseCommand):
                                 likes=0,
                                 creation_time=fake.date_time_this_century(tzinfo=fake.pytimezone()))
             questions.append(question)
-        Question.objects.bulk_create(questions)
+        Question.objects.bulk_create(questions, batch_size=1000)
         questions = Question.objects.all()
 
         for i, question in enumerate(questions):
@@ -82,8 +85,8 @@ class Command(BaseCommand):
                 likeCounter += value
             question.likes = likeCounter
 
-        QuestionLike.objects.bulk_create(questionsLikes)
-        Question.objects.bulk_update(questions, ['likes'])
+        QuestionLike.objects.bulk_create(questionsLikes, batch_size=10000)
+        Question.objects.bulk_update(questions, ['likes'], batch_size=1000)
         questions = Question.objects.all()
 
         replies = []
@@ -97,12 +100,12 @@ class Command(BaseCommand):
                               creation_time=fake.date_time_between(start_date=question.creation_time,
                                                                    tzinfo=fake.pytimezone()))
                 replies.append(reply)
-        Reply.objects.bulk_create(replies)
+        Reply.objects.bulk_create(replies, batch_size=10000)
         replies = Reply.objects.all()
 
         replyLikes = []
         for i, reply in enumerate(replies):
-            print(f'Reply likes for question {i} from {ratio * 10}')
+            print(f'Reply likes for question {i} from {ratio * 100}')
             likeCounter = 0
             baseUserId = fake.random_int(min=0, max=len(profiles) - 1)
             for j in range(5):
@@ -114,8 +117,9 @@ class Command(BaseCommand):
                 likeCounter += value
             reply.rating = likeCounter
 
-        ReplyLike.objects.bulk_create(replyLikes)
-        Reply.objects.bulk_update(replies, ['rating'])
+        ReplyLike.objects.bulk_create(replyLikes, batch_size=10000)
+        print('Reply likes created')
+        Reply.objects.bulk_update(replies, ['rating'], batch_size=2000)
 
         end = time.time()
         print(f'Time elapsed with ratio={ratio} is {end - start} secs')

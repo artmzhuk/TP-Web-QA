@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.db.models import Count, Sum
+from django_resized import ResizedImageField
 
 
 # Create your models here.
@@ -31,11 +32,20 @@ class TagManager(models.Manager):
 
 
 class ProfileManager(models.Manager):
+    def create_profile(self, username, email, password, avatar):
+        user = User.objects.create_user(username=username, email=email, password=password)
+        if avatar is None:
+            profile = Profile(user=user)
+        else:
+            profile = Profile(user=user, avatar=avatar)
+        profile.save()
+        return
+
     def get_best_five(self):
         best = self.annotate(q_count=Count('question')) \
                    .order_by('-q_count')[:5]
-        for i in best:
-            print(i.q_count, i.user.username)
+        # for i in best:
+        #     print(i.q_count, i.user.username)
         return best
 
 
@@ -46,7 +56,9 @@ class ReplyManager(models.Manager):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to='avatars')
+    avatar = ResizedImageField(size=[512, 512], crop=['top', 'left'], upload_to='avatars',
+                               default='avatars/default.jpg')
+    # avatar = models.ImageField(upload_to='avatars')
 
     objects = ProfileManager()
 
@@ -127,6 +139,7 @@ class ReplyLike(models.Model):
     reply = models.ForeignKey(Reply, on_delete=models.CASCADE)
     author = models.ForeignKey(Profile, on_delete=models.PROTECT)
     value = models.SmallIntegerField()
+
     class Meta:
         constraints = [
             models.UniqueConstraint(

@@ -31,7 +31,8 @@
                 {% endfor %}
             </div>
             <div class="ms-auto">
-                <button type="button" class="btn btn-outline-primary float-end">Reply</button>
+                <a class="btn btn-outline-primary float-end"
+                   href="{% url 'question' question_id=question.id %}#reply-bottom">Reply</a>
             </div>
         </div>
         <span>Created {{ question.creation_time }} by {{ question.author.user.username }}</span>

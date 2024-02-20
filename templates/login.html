@@ -1,28 +1,14 @@
 {% extends 'layouts/base.html' %}
-
+{% load crispy_forms_tags %}
 {% block title %}Log in{% endblock %}
 
 {% block content %}
     <div class="row text-center">
         <div class="col-md-3"></div>
         <div class="col-md-6 justify-content-center">
-            <form class="form-signin">
-
+            <form class="form-signin" method="post">
                 <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-
-                <div class="form-floating">
-                    <input type="email" class="form-control rounded-bottom-0" id="floatingInput"
-                           placeholder="name@example.com">
-                    <label for="floatingInput">Email address</label>
-                </div>
-                <div class="form-floating">
-                    <input type="password" class="form-control rounded-top-0" id="floatingPassword"
-                           placeholder="Password">
-                    <label for="floatingPassword">Password</label>
-                </div>
-                <p class="text-danger my-2 float-start">Sorry, wrong password!</p>
-                <button class="btn btn-primary w-100 py-2 " type="submit">Sign in</button>
-
+                {% crispy form %}
             </form>
         </div>
     </div>
